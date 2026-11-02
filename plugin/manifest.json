@@ -1,0 +1,14 @@
+{
+  "name": "Vibe Figma Patch",
+  "id": "vibe-figma-patch-0001",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["none"],
+    "devAllowedDomains": ["http://localhost:8787"],
+    "reasoning": "Reads the patch the local agent prepared and posts the result back, on this machine only."
+  }
+}

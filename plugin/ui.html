@@ -1,0 +1,48 @@
+<style>
+  body { font: 12px/1.5 Inter, system-ui, sans-serif; margin: 12px; color: #1f2430; }
+  button { font: inherit; padding: 8px 12px; border-radius: 6px; border: 1px solid #c9ccd6; background: #fff; cursor: pointer; }
+  button.primary { background: #A761FF; border-color: #A761FF; color: #111827; font-weight: 600; }
+  .row { display: flex; gap: 8px; margin-bottom: 10px; }
+  textarea { width: 100%; height: 90px; box-sizing: border-box; font: 11px/1.4 ui-monospace, Consolas, monospace; }
+  #log { white-space: pre-wrap; font: 11px/1.4 ui-monospace, Consolas, monospace; margin-top: 8px; max-height: 110px; overflow: auto; }
+</style>
+<div class="row">
+  <button class="primary" id="fetch">Apply patch from agent</button>
+  <button id="close">Close</button>
+</div>
+<details>
+  <summary>Paste a patch instead</summary>
+  <textarea id="paste" placeholder='{"id":"...","ops":[...]}'></textarea>
+  <button id="applyPaste">Apply pasted patch</button>
+</details>
+<div id="log">Waiting. The agent serves the patch at http://localhost:8787/patch.json</div>
+<script>
+  const SERVER = "http://localhost:8787";
+  const log = t => { document.getElementById("log").textContent = t; };
+  const send = patch => { log("Applying " + (patch.id || "patch") + " (" + (patch.ops || []).length + " ops)..."); parent.postMessage({ pluginMessage: { type: "apply", patch } }, "*"); };
+
+  document.getElementById("fetch").onclick = async () => {
+    try {
+      const r = await fetch(SERVER + "/patch.json", { cache: "no-store" });
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      send(await r.json());
+    } catch (e) {
+      log("Could not reach the agent's server (" + e.message + "). Ask the agent to start it, or paste the patch below.");
+    }
+  };
+  document.getElementById("applyPaste").onclick = () => {
+    try { send(JSON.parse(document.getElementById("paste").value)); }
+    catch (e) { log("Pasted text is not valid JSON: " + e.message); }
+  };
+  document.getElementById("close").onclick = () => parent.postMessage({ pluginMessage: { type: "close" } }, "*");
+
+  onmessage = async e => {
+    const msg = e.data.pluginMessage;
+    if (!msg || msg.type !== "report") return;
+    const r = msg.report;
+    log("Build " + r.build + ": " + r.applied.length + " applied, " + r.failed.length + " failed" +
+        (r.failed.length ? "\n" + r.failed.map(f => "#" + f.i + " " + f.op + ": " + f.error).join("\n") : ""));
+    try { await fetch(SERVER + "/result", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(r) }); }
+    catch (_) { /* pasted-patch mode: result stays in this panel */ }
+  };
+</script>

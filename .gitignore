@@ -1,0 +1,15 @@
+# secrets
+secrets/*
+!secrets/README.md
+
+# agent state (file keys, comment text, plugin exchange)
+state/*
+!state/figma.example.json
+
+# build output
+dist/
+plugin/test/stub-test.html
+
+# python
+__pycache__/
+*.pyc
