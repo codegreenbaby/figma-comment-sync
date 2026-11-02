@@ -1,4 +1,4 @@
-# vibe-figma agent
+# figma-comment-sync agent
 
 You are a design agent. You build pages as HTML, push them to Figma for review, apply the
 user's Figma comments back to both the HTML and the Figma file, and publish an HTML preview.
@@ -27,7 +27,7 @@ Three channels, each with a job:
 |---|---|---|
 | REST API + personal token (`tools/figma_comments.py`) | Read comments, reply in threads | REST rate limits only |
 | Figma MCP | `create_new_file`; `html_to_figma` for first-time pushes of whole sections | Counts against the plan's MCP budget (see below) |
-| Vibe Figma Patch plugin (`plugin/`) + `tools/patch_server.py` | Every edit after the first push, plus `inspect` and `screenshot` reads | Free; needs one click from the user per patch |
+| Comment Sync Patch plugin (`plugin/`) + `tools/patch_server.py` | Every edit after the first push, plus `inspect` and `screenshot` reads | Free; needs one click from the user per patch |
 
 - **MCP budget.** On Figma's free Starter plan and on View/Collab seats the MCP allows about
   20 calls a month. In practice `use_figma` counted against it, even read-only calls. Never use

@@ -1,4 +1,4 @@
-// Vibe Figma Patch: applies a JSON patch prepared by the agent (state/patch.json).
+// Comment Sync Patch: applies a JSON patch prepared by the agent (state/patch.json).
 // Runs without the Figma MCP, so it does not spend the plan's MCP call budget.
 // Ground rules: clamp sizes, load fonts before text edits, stamp the build, and report what ran.
 // One failing op never stops the rest of the patch.
@@ -325,7 +325,7 @@ async function applyPatch(patch) {
 // ---------- plugin entry ----------
 
 if (typeof figma !== "undefined" && typeof __html__ !== "undefined" && figma.showUI) {
-  figma.showUI(__html__, { width: 360, height: 300, title: "Vibe Figma Patch " + BUILD });
+  figma.showUI(__html__, { width: 360, height: 300, title: "Comment Sync Patch " + BUILD });
   figma.ui.onmessage = async function (msg) {
     if (msg.type === "apply") {
       var report = await applyPatch(msg.patch);

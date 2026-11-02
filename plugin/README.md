@@ -1,4 +1,4 @@
-# Vibe Figma Patch (plugin)
+# Comment Sync Patch (plugin)
 
 A Figma development plugin that applies a JSON patch prepared by the agent. It edits the file
 through the Plugin API, so it does not spend Figma MCP calls.
@@ -15,7 +15,7 @@ Development plugins run only in the **Figma desktop app**.
 
 1. The agent writes `state/patch.json` and starts `python tools/patch_server.py`
    (listens on `127.0.0.1:8787` only).
-2. In Figma: Plugins > Development > Vibe Figma Patch > **Apply patch from agent**.
+2. In Figma: Plugins > Development > Comment Sync Patch > **Apply patch from agent**.
 3. The plugin applies the ops, shows a toast with counts and the build stamp, and POSTs its report
    to the server. The agent reads `state/patch-result.json`; screenshots land in `state/shots/`.
 

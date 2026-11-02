@@ -1,6 +1,6 @@
 {
-  "name": "Vibe Figma Patch",
-  "id": "vibe-figma-patch-0001",
+  "name": "Comment Sync Patch",
+  "id": "figma-comment-sync-patch-0001",
   "api": "1.0.0",
   "main": "code.js",
   "ui": "ui.html",

@@ -44,7 +44,7 @@ parts. Bundle with `tools/build_preview.py ... --full` and look at 1440 and 375 
    Use `"$N"` to refer to the node made by op N in the same patch.
 2. End the patch with a `screenshot` op for each touched section.
 3. Start the bridge in the background: `python tools/patch_server.py`.
-4. Ask the user to run *Plugins > Development > Vibe Figma Patch > Apply patch from agent*.
+4. Ask the user to run *Plugins > Development > Comment Sync Patch > Apply patch from agent*.
 5. Read `state/patch-result.json`. Every `failed` entry needs a fix and a follow-up patch.
    Look at `state/shots/*.png`. A blank image right after `image`/`setImage` in builds before b6
    meant the screenshot ran before the picture decoded; re-check with a screenshot-only patch.

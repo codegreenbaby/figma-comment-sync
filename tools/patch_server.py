@@ -1,4 +1,4 @@
-"""Local bridge between the agent and the Vibe Figma Patch plugin.
+"""Local bridge between the agent and the Comment Sync Patch plugin.
 
 GET  /patch.json  serves state/patch.json, with file references expanded:
                   "file": "pages/.../x.png"  -> "base64"
@@ -89,5 +89,5 @@ class Handler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    print("Vibe Figma Patch server on http://localhost:8787", flush=True)
+    print("Comment Sync Patch server on http://localhost:8787", flush=True)
     ThreadingHTTPServer(("127.0.0.1", 8787), Handler).serve_forever()

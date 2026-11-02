@@ -1,4 +1,4 @@
-# vibe-figma
+# figma-comment-sync
 
 **English** · [Русский](README.ru.md)
 
@@ -38,7 +38,7 @@ It talks to Figma over three channels, each chosen for one job:
 |---|---|---|
 | **Figma REST API** with a personal token (`tools/figma_comments.py`) | Read comments, reply in threads | Neither the Plugin API nor the Figma MCP server can read comments |
 | **Figma MCP server** (`html_to_figma`, `create_new_file`) | Create the file; import whole sections from HTML the first time | The only way to turn HTML into editable Figma layers in one step |
-| **Vibe Figma Patch plugin** + local bridge (`plugin/`, `tools/patch_server.py`) | Every edit after the first import; reads (`inspect`, `screenshot`) | Free of MCP call limits, deterministic, reports back |
+| **Comment Sync Patch plugin** + local bridge (`plugin/`, `tools/patch_server.py`) | Every edit after the first import; reads (`inspect`, `screenshot`) | Free of MCP call limits, deterministic, reports back |
 
 On Figma's free plan the MCP server allows only about 20 calls a month, and edits through
 `use_figma` counted against that budget in practice. The plugin exists so that the everyday loop
@@ -61,7 +61,7 @@ flowchart LR
   end
   subgraph Figma["Figma"]
     F["Figma file"]
-    P["Vibe Figma Patch plugin<br/>(Figma Desktop)"]
+    P["Comment Sync Patch plugin<br/>(Figma Desktop)"]
     API["REST API<br/>comments"]
     MCP["MCP server<br/>html_to_figma"]
   end
@@ -117,7 +117,7 @@ sequenceDiagram
   participant REST as Figma REST API
   participant Page as HTML source
   participant Bridge as patch_server.py
-  participant Plugin as Vibe Figma Patch
+  participant Plugin as Comment Sync Patch
   participant File as Figma file
 
   You->>File: leave comments on frames
@@ -212,8 +212,8 @@ development plugins.
 ## Setup
 
 ```bash
-git clone https://github.com/codegreenbaby/vibe-figma.git
-cd vibe-figma
+git clone https://github.com/codegreenbaby/figma-comment-sync.git
+cd figma-comment-sync
 ```
 
 1. **Token.** Figma > Settings > Security > Personal access tokens > Generate. Save it as one line

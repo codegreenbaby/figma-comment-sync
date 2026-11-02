@@ -1,4 +1,4 @@
-# vibe-figma
+# figma-comment-sync
 
 [English](README.md) · **Русский**
 
@@ -38,7 +38,7 @@ HTML-превью с анимациями.
 |---|---|---|
 | **REST API Figma** с личным токеном (`tools/figma_comments.py`) | Читать комментарии, отвечать в ветках | Ни Plugin API, ни Figma MCP не умеют читать комментарии |
 | **Figma MCP** (`html_to_figma`, `create_new_file`) | Создать файл; первый раз импортировать целые секции из HTML | Единственный способ одним шагом превратить HTML в редактируемые слои |
-| **Плагин Vibe Figma Patch** + локальный мост (`plugin/`, `tools/patch_server.py`) | Все правки после первого импорта; чтение (`inspect`, `screenshot`) | Не тратит лимит MCP, работает детерминированно, присылает отчёт |
+| **Плагин Comment Sync Patch** + локальный мост (`plugin/`, `tools/patch_server.py`) | Все правки после первого импорта; чтение (`inspect`, `screenshot`) | Не тратит лимит MCP, работает детерминированно, присылает отчёт |
 
 На бесплатном тарифе Figma MCP даёт около 20 вызовов в месяц, и правки через `use_figma` на
 практике тоже списывались из этого лимита. Плагин нужен, чтобы ежедневный цикл не тратил MCP
@@ -61,7 +61,7 @@ flowchart LR
   end
   subgraph Figma["Figma"]
     F["Figma-файл"]
-    P["Плагин Vibe Figma Patch<br/>(Figma Desktop)"]
+    P["Плагин Comment Sync Patch<br/>(Figma Desktop)"]
     API["REST API<br/>комментарии"]
     MCP["MCP-сервер<br/>html_to_figma"]
   end
@@ -117,7 +117,7 @@ sequenceDiagram
   participant REST as REST API Figma
   participant Page as HTML-исходник
   participant Bridge as patch_server.py
-  participant Plugin as Vibe Figma Patch
+  participant Plugin as Comment Sync Patch
   participant File as Figma-файл
 
   You->>File: оставляешь комментарии на фреймах
@@ -211,8 +211,8 @@ sequenceDiagram
 ## Установка
 
 ```bash
-git clone https://github.com/codegreenbaby/vibe-figma.git
-cd vibe-figma
+git clone https://github.com/codegreenbaby/figma-comment-sync.git
+cd figma-comment-sync
 ```
 
 1. **Токен.** Figma > Settings > Security > Personal access tokens > Generate. Сохрани его одной
